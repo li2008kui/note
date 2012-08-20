@@ -1,0 +1,14 @@
+execute dbms_random.seed(0)
+
+create table t1
+pctfree 99
+pctused 1
+as
+select 
+       rownum                           id,
+       trunc(100*dbms_random.normal)    val,
+       rpad('x',100)                    padding
+from
+    all_objects
+where 
+      rownum <= 10000;

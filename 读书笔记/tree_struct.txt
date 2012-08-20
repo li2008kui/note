@@ -1,0 +1,350 @@
+C++树的实现
+STL里面没有提供容器树的模板实现，从网上找到一个：
+ 
+Tree.h
+//tree.h 头文件
+ 
+#include <list>
+#include <algorithm>
+using namespace std;
+ 
+struct TreeNode; //定义一个结构体原形
+classTree;      //定义一个类原形
+classIterator; //定义一个类原形
+typedef list<TreeNode*> List; //重命名一个节点链表
+ 
+TreeNode* clone(TreeNode*,List&,TreeNode*);//Clone复制函数
+ 
+struct TreeNode{
+   int_data;                  //数据
+   TreeNode* _parent;          //父节点
+   List_children;             //子节点
+   TreeNode(int,TreeNode*);    //构造函数
+   void SetParent(TreeNode&); //设置父节点
+   void InsertChildren(TreeNode&); //插入子节点
+};
+ 
+classTree{
+public:
+ 
+ //下面是构造器和运算符重载
+   Tree();                            //默认构造函数
+   Tree(constTree&);                 //复制构造函数
+   Tree(constint);                   //带参数构造函数
+   Tree(constint,constlist<Tree*>&);//带参数构造函数
+   ~Tree();                           //析构函数
+   Tree& operator=(constTree&);      //=符号运算符重载
+   bool operator==(constTree&);      //==符号运算符重载
+   bool operator!=(constTree&);      //!=符号运算符重载
+ 
+   //下面是成员函数
+   void Clear();                      //清空
+   boolIsEmpty()const;               //判断是否为空
+   intSize()const;                   //计算节点数目
+   intLeaves();                      //计算叶子数
+   intRoot()const;                   //返回根元素
+   intHeight();                      //计算树的高度
+ 
+ 
+   //下面是静态成员函数
+  static boolIsRoot(Iterator);     //判断是否是根
+   static boolisLeaf(Iterator);     //判断是否是叶子
+   static IteratorParent(Iterator); //返回其父节点
+   static intNumChildren(Iterator); //返回其子节点数目
+ 
+   //跌代器函数
+   Iteratorbegin();                  //Tree Begin
+   Iteratorend();                    //Tree End
+   friend classIterator;             //Iterator SubClass
+private:
+   list<TreeNode*> _nodes;         //节点数组
+   list<TreeNode*>::iteratorLIt; //一个节点迭代器
+   intheight(TreeNode*);
+   intlevel(TreeNode*,Iterator);
+};
+ 
+//This is TreeSub Class Iterator
+classIterator{
+   private: 
+    Tree* _tree;                     //Tree data
+    list<TreeNode*>::iterator_lit; //List Iterator
+   public:
+    Iterator();                               //默认构造函数
+    Iterator(constIterator&);                //复制构造函数
+    Iterator(Tree*,TreeNode*);                //构造函数
+    Iterator(Tree*,list<TreeNode*>::iterator);//构造函数
+    //运算符重载
+    void operator=(constIterator&);          //赋值运算符重载
+    bool operator==(constIterator&);         //关系运算符重载
+    bool operator!=(constIterator&);         //关系运算符重载
+    Iterator& operator++();                   //前缀++运算符
+    Iterator operator++(int);                 //后缀++运算符
+    int operator*()const;                     //获得节点信息
+    bool operator!();                         //赋值运算符重载
+  
+    typedef list<TreeNode*>::iteratorList;
+    friend classTree;
+};
+ 
+Tree.cpp
+//tree.cpp 实现文件
+ 
+#include "Tree.h"
+ 
+//***** 下面是对于TreeNode结构体的定义实现*****///
+ 
+TreeNode::TreeNode(inttype= 0,TreeNode* Parent = 0){
+ _data = type;
+ _parent = Parent;
+}
+void TreeNode::SetParent(TreeNode& node){
+ _parent = &node;
+}
+void TreeNode::InsertChildren(TreeNode& node){
+ TreeNode* p = &node;
+ _children.push_back(p);
+}
+ 
+ 
+ 
+//***** 下面是对于Tree类的定义实现*****///
+Tree::Tree(){
+ 
+}
+ 
+Tree::Tree(constinttype){
+ _nodes.push_back(new TreeNode(type));
+}
+ 
+Tree::Tree(constTree& t){
+ if(t._nodes.empty())return;
+ clone(t._nodes.front(),_nodes,0);
+}
+Tree::Tree(constinttype,constlist<Tree*>& lit){
+ TreeNode* root = new TreeNode(type);//建立根节点
+ _nodes.push_back(root);//放入树中
+ list<Tree*>::const_iteratorit;
+ for(it = lit.begin();it!=lit.end();it++){
+ if(!((*it)->_nodes.empty())){//如果当前节点元素不为空
+   Tree* tp = newTree(**it);
+   TreeNode* p = tp->_nodes.front();
+   root->_children.push_back(p); //设置根的子节点
+   p->_parent = root;            //设置节点的父节点为根
+   list<TreeNode*>::iteratorlit1 = tp->_nodes.begin();
+   list<TreeNode*>::iteratorlit2 = tp->_nodes.end();
+   list<TreeNode*>::iteratorlit3 = _nodes.end();
+   _nodes.insert(lit3,lit1,lit2);
+ }
+ }
+}
+ 
+Tree::~Tree(){
+ for(list<TreeNode*>::iteratorit = _nodes.begin();it!=_nodes.end();it++){
+ delete* it;
+ }
+}
+ 
+Tree& Tree::operator =(constTree & t){
+ Clear();
+ Tree* p = newTree(t);
+ _nodes = p->_nodes;
+ return *this;
+}
+ 
+boolTree::operator ==(constTree& t){
+ if(_nodes.size()!=t._nodes.size()){
+ return false;
+ }
+ list<TreeNode*>::iteratorit = _nodes.begin();
+ list<TreeNode*>::const_iterator_it = t._nodes.begin();
+ while(it!=_nodes.end()&&_it!=t._nodes.end()){
+ if((*it)->_data!=(*_it)->_data){
+   return false;
+ }
+ it++;
+ _it++;
+ }
+ return true;
+}
+ 
+boolTree::operator !=(constTree& t){
+ if(_nodes.size()!=_nodes.size()){
+ return true;
+ }
+ else{
+ list<TreeNode*>::iteratorit = _nodes.begin();
+     list<TreeNode*>::const_iterator_it = t._nodes.begin();
+ while(it!=_nodes.end()&&_it!=t._nodes.end()){
+   if((*it)->_data!=(*_it)->_data){
+    return true;
+   }
+   it++;
+   _it++;
+ }
+ return false;
+ }
+}
+ 
+void Tree::Clear(){
+ for(list<TreeNode*>::iteratorit = _nodes.begin();it!=_nodes.end();it++){
+ delete* it;
+ }
+ _nodes.clear();
+}
+ 
+boolTree::IsEmpty()const{
+ return _nodes.empty();
+}
+ 
+intTree::Size()const{
+ return (int)_nodes.size();
+}
+ 
+intTree::Leaves(){
+ inti = 0;
+ list<TreeNode*>::iteratorit = _nodes.begin();
+ while(it!=_nodes.end()){
+ if((*it)->_children.size()==0){
+   i++;
+ }
+ it++;
+ }
+ return i;
+}
+ 
+ 
+intTree::Height(){
+ if(_nodes.size()!=0){
+ TreeNode* TNode = _nodes.front();
+ return height(TNode);
+ }
+ else{
+ return -1; //判断为空树
+ }
+}
+ 
+intTree::height(TreeNode* node){
+ if(!node){
+ return -1;
+ }
+ else{
+ list<TreeNode*> plist = node->_children;
+ if(plist.size()==0){
+   return 0;
+ }
+ inthA = 0;
+ for(list<TreeNode*>::iteratorit = plist.begin();it!=plist.end();it++){
+  inthB = height(*it);
+   if(hB>hA){
+    hA = hB;
+   }
+ }
+ return hA+1;
+ }
+}
+ 
+ 
+IteratorTree::begin(){
+ return Iterator(this,_nodes.begin());
+}
+ 
+IteratorTree::end(){
+ return Iterator(this,_nodes.end());
+}
+intTree::Root()const{
+ return (*_nodes.begin())->_data;
+}
+ 
+ 
+boolTree::IsRoot(Iteratorit){
+ TreeNode p = *it;
+ if(p._parent == 0){
+ return true;
+ }
+ return false;
+}
+ 
+boolTree::isLeaf(Iteratorit){
+ TreeNode p = *it;
+ if(p._children.size() == 0){
+ return true;
+ }
+ return false;
+}
+ 
+IteratorTree::Parent(Iteratorit){
+ TreeNode p = *it;
+ Tree* t = it._tree;
+ IteratorIte(t,p._parent);
+ return Ite;
+}
+ 
+ 
+intTree::NumChildren(Iteratorit){
+ TreeNode p = *it;
+ return (int)p._children.size();
+}
+ 
+//***** 下面是对于Tree::Iterator类的定义实现*****///
+Iterator::Iterator(){
+}
+ 
+Iterator::Iterator(constIterator& it){
+ _tree = it._tree;
+ _lit = it._lit;
+}
+ 
+Iterator::Iterator(Tree* t, TreeNode* n){
+ _tree = t;
+ list<TreeNode*>& nodes = _tree->_nodes;
+ _lit = find(nodes.begin(),nodes.end(),n);//<algorithm> Members
+}
+ 
+Iterator::Iterator(Tree * t, list<TreeNode*>::iteratorlt){
+ _tree = t;
+ _lit = lt;
+}
+ 
+void Iterator::operator =(constIterator& it){
+ _tree = it._tree;
+ _lit = it._lit;
+}
+ 
+boolIterator::operator ==(constIterator & it){
+ return _tree == it._tree && _lit == it._lit;
+}
+ 
+boolIterator::operator !=(constIterator & it){
+ return _tree != it._tree || _lit != it._lit;
+}
+ 
+Iterator& Iterator::operator ++(){
+ ++_lit;
+ return *this;
+}
+ 
+IteratorIterator::operator ++(int){
+ Iteratorit(*this);
+ ++_lit;
+ return it;
+}
+ 
+intIterator::operator *() const{
+ return ((*_lit)->_data);
+}
+ 
+boolIterator::operator !(){
+ return _lit == _tree->_nodes.end();
+}
+ 
+//Clone函数
+TreeNode* clone(TreeNode* node,List& nodes,TreeNode* nodep){
+ TreeNode* cp = new TreeNode(node->_data,nodep);
+ nodes.push_back(cp);
+ List& l = node->_children;
+ List& cl = cp->_children;
+ for(list<TreeNode*>::iteratorlt = l.begin();lt!=l.end();lt++){
+ cl.push_back(clone(*lt,nodes,cp));
+ }
+ return cp;
+}
