@@ -2,7 +2,7 @@
 
 
 
-#MakeDown说明	 
+#MarkDown说明	 
 ##标题
 
 ---
@@ -87,6 +87,21 @@ dfdfdfdfd
 `
 
 this is method `` printf('\n');``
+
+```js
+function method()
+{
+    alert("javascript");
+}
+```
+
+```java
+class Test{
+    public void static main(){
+        System.out.println("java");
+    }
+}
+```
 
 ##link
 
