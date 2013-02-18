@@ -210,11 +210,13 @@ Markdown 支持以下这些符号前面加上反斜杠来帮助插入普通的符号：
 * GFM在issue中通过#和数字自动链接到对应的issue（request也支持）（eg：#1）
 * GFM自动识别链接，链接不用尖括号括起来也会被认为是链接。
 * GFM实现代码语法高亮
+* GFM自动@别人
+* GFM自动引用，包括项目，用户名，issue等
 * GFM支持任务列表
+
+
 	> - [] task #1
 	> - [] task item
 	> - [x] complete 
-* GFM自动@别人
-* GFM自动引用，包括项目，用户名，issue等
 
-
+---
