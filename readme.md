@@ -86,9 +86,10 @@ dfdfdfdfd
 ##代码
 
 ---
+代码写在这里
 
 `
-代码写在这里 public void static main()
+ public static void main()
 `
 
 this is method `` printf('\n');``
@@ -110,7 +111,7 @@ class Test{
 
 ```cs
 class Test{
-    public public static void main()
+    public static void main()
     {
         Console.WriteLine("C#");
     }
