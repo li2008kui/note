@@ -62,9 +62,11 @@ __double underscores__
 * red
 * green
 * blue
+
 + red
 + green
 + blue
+
 - red
 - green
 - blue
@@ -100,7 +102,7 @@ function method()
 
 ```java
 class Test{
-    public void static main(){
+    public static void main(String argc[]){
         System.out.println("java");
     }
 }
@@ -108,7 +110,8 @@ class Test{
 
 ```cs
 class Test{
-    public void static main(){
+    public public static void main()
+    {
         Console.WriteLine("C#");
     }
 }
@@ -144,12 +147,12 @@ I get 10 times more traffic from [Google] than from
 ##Í¼Æ¬
 
 ---
-![github logo](/images/logo.png)
+![github logo](/assets/help/set-up-git-27bd5975b24e994bc994ec1cf5c82ff9.gif)
 
-![github logo](/images/logo.png "Optional title")
+![github logo](/assets/help/set-up-git-27bd5975b24e994bc994ec1cf5c82ff9.gif "Optional title")
 
 ![github logo][logo]
-[logo]: /images/logo.png  "Optional title attribute"
+[logo]: /assets/help/set-up-git-27bd5975b24e994bc994ec1cf5c82ff9.gif  "Optional title attribute"
 
 
 ##·Ö¸ôÏß
