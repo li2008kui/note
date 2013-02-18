@@ -3,6 +3,9 @@
 
 
 #MarkDown说明	 
+
+( 语法参见[官方语法说明](http://daringfireball.net/projects/markdown/syntax) )
+
 ##标题
 
 ---
@@ -99,6 +102,14 @@ function method()
 class Test{
     public void static main(){
         System.out.println("java");
+    }
+}
+```
+
+```cs
+class Test{
+    public void static main(){
+        Console.WriteLine("C#");
     }
 }
 ```
