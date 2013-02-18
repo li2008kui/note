@@ -144,12 +144,12 @@ I get 10 times more traffic from [Google] than from
 ##Í¼Æ¬
 
 ---
-![Alt text](/path/to/img.jpg)
+![github logo](/images/logo.png)
 
-![Alt text](/path/to/img.jpg "Optional title")
+![github logo](/images/logo.png "Optional title")
 
-![Alt text][id]
-[id]: url/to/image  "Optional title attribute"
+![github logo][logo]
+[logo]: /images/logo.png  "Optional title attribute"
 
 
 ##·Ö¸ôÏß
