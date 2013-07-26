@@ -1,0 +1,5 @@
+cas改造随笔
+http://www.cnblogs.com/hellowood/archive/2010/08/05/1793364.html
+
+JASIG CAS协议介绍 （1）-CAS Entities
+http://blog.csdn.net/tienway/article/details/5464516
